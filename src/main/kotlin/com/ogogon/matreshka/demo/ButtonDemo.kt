@@ -11,16 +11,6 @@ import javax.swing.*
 
 // See https://docs.oracle.com/javase/tutorial/uiswing/components/button.html
 
-private fun createImageIcon(path: String): ImageIcon? {
-    val imgURL = Thread.currentThread().contextClassLoader.getResource(path)
-    return if (imgURL != null) {
-        ImageIcon(imgURL)
-    } else {
-        System.err.println("Couldn't find file: $path")
-        null
-    }
-}
-
 private val updateButtonsState: (Component, ActionEvent) -> Unit = { c, e ->
     if (c.parent.componentCount == 3) {
         if ("disable" == e.actionCommand) {

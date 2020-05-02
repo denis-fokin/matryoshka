@@ -1,5 +1,6 @@
 package com.ogogon.matreshka
 
+import com.ogogon.matreshka.demo.createImageIcon
 import java.awt.Color
 import java.awt.Component
 import java.awt.Font
@@ -10,16 +11,6 @@ import javax.swing.ImageIcon
 import javax.swing.JFrame
 
 // See https://docs.oracle.com/javase/tutorial/uiswing/components/button.html
-
-private fun createImageIcon(path: String): ImageIcon? {
-    val imgURL = Thread.currentThread().contextClassLoader.getResource(path)
-    return if (imgURL != null) {
-        ImageIcon(imgURL)
-    } else {
-        System.err.println("Couldn't find file: $path")
-        null
-    }
-}
 
 private val  updateButtonsState : (Component, ActionEvent) -> Unit  = { c, e ->
     if (c.parent.componentCount == 3) {
