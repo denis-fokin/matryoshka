@@ -10,6 +10,7 @@ object Controller {
 
     // This is the model
     var choices = StringBuffer("cght")
+
     var pictureLabel:JLabel? = null
 
     fun plug(label: JLabel) {
@@ -53,7 +54,7 @@ fun main() {
 
     JFrame {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        title = "Button Demo"
+        title = "Checkbox Demo"
         BorderLayout {
             GridLayout (BorderLayout.LINE_START) {
                 columns = 1
