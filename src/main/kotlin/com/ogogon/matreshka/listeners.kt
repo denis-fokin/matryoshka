@@ -3,6 +3,7 @@ package com.ogogon.matreshka
 import java.awt.*
 import java.awt.event.*
 import javax.swing.AbstractButton
+import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.event.AncestorEvent
 import javax.swing.event.AncestorListener
@@ -56,6 +57,10 @@ fun <T: JComponent> T?.onKeyTyped(function: (KeyEvent) -> Unit) {
 }
 
 fun <T: AbstractButton> T?.onAction(function: (ActionEvent) -> Unit) {
+    this?.addActionListener { function.invoke(it!!) }
+}
+
+fun <T: JComboBox<Any?>> T?.onAction(function: (ActionEvent) -> Unit) {
     this?.addActionListener { function.invoke(it!!) }
 }
 

@@ -6,10 +6,11 @@ import java.awt.event.ItemEvent
 import java.awt.event.KeyEvent
 import javax.swing.*
 
-object Controller {
+object CheckBoxDemoController {
 
     // This is the model
     var choices = StringBuffer("cght")
+
     var pictureLabel:JLabel? = null
 
     fun plug(label: JLabel) {
@@ -53,7 +54,7 @@ fun main() {
 
     JFrame {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        title = "Button Demo"
+        title = "Checkbox Demo"
         BorderLayout {
             GridLayout (BorderLayout.LINE_START) {
                 columns = 1
@@ -63,8 +64,8 @@ fun main() {
                     mnemonic = KeyEvent.VK_C
                     isSelected = true
                     onItemStateChange {
-                        Controller.update(it)
-                        Controller.update()
+                        CheckBoxDemoController.update(it)
+                        CheckBoxDemoController.update()
                     }
                 }
                 JCheckBox {
@@ -72,8 +73,8 @@ fun main() {
                     mnemonic = KeyEvent.VK_G
                     isSelected = true
                     onItemStateChange {
-                        Controller.update(it)
-                        Controller.update()
+                        CheckBoxDemoController.update(it)
+                        CheckBoxDemoController.update()
                     }
                 }
                 JCheckBox {
@@ -81,8 +82,8 @@ fun main() {
                     mnemonic = KeyEvent.VK_H
                     isSelected = true
                     onItemStateChange {
-                        Controller.update(it)
-                        Controller.update()
+                        CheckBoxDemoController.update(it)
+                        CheckBoxDemoController.update()
                     }
                 }
                 JCheckBox {
@@ -90,8 +91,8 @@ fun main() {
                     mnemonic = KeyEvent.VK_T
                     isSelected = true
                     onItemStateChange {
-                        Controller.update(it)
-                        Controller.update()
+                        CheckBoxDemoController.update(it)
+                        CheckBoxDemoController.update()
                     }
                 }
 
@@ -99,12 +100,12 @@ fun main() {
             JLabel(BorderLayout.CENTER) {
                 icon = createImageIcon(
                     "images/geek/geek-"
-                            + Controller.choices.toString()
+                            + CheckBoxDemoController.choices.toString()
                             + ".gif"
                 )
-                toolTipText = Controller.choices.toString()
+                toolTipText = CheckBoxDemoController.choices.toString()
                 apply {
-                    Controller.plug(this)
+                    CheckBoxDemoController.plug(this)
                     if (icon == null) {
                         text = "Missing Image"
                     } else {
