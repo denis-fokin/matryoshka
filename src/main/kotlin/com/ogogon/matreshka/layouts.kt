@@ -14,7 +14,6 @@ inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() ->
     lastParent = panel
     function.invoke(this)
     lastParent = previousParent
-
 }
 
 fun FlowLayout(c:Any? = null, f: FlowLayout.() -> Unit) = Layout(c, f)
