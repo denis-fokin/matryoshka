@@ -4,6 +4,7 @@ import java.awt.BorderLayout
 import java.awt.FlowLayout
 import java.awt.GridLayout
 import java.awt.LayoutManager
+import javax.swing.BoxLayout
 import javax.swing.JPanel
 
 inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() -> Unit): T = T::class.java.newInstance().apply {
@@ -19,3 +20,12 @@ inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() ->
 fun FlowLayout(c:Any? = null, f: FlowLayout.() -> Unit) = Layout(c, f)
 fun BorderLayout(c:Any? = null, f: BorderLayout.() -> Unit) = Layout(c, f)
 fun GridLayout(c:Any? = null, f: GridLayout.() -> Unit) = Layout(c, f)
+
+fun BoxLayout(panel:JPanel = JPanel(), axis:Int, function: BoxLayout.() -> Unit): BoxLayout = BoxLayout(panel, axis).apply {
+    panel.layout = this
+    lastParent?.add(panel)
+    val previousParent = lastParent
+    lastParent = panel
+    function.invoke(this)
+    lastParent = previousParent
+}
