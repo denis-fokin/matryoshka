@@ -11,29 +11,38 @@ import java.awt.event.ItemEvent
 import java.awt.event.KeyEvent
 import javax.swing.*
 
+val CAT_COMMAND = "CAT_COMAND"
+
 object RadioButtonDemoController {
     val petStrings = arrayOf<String?>("Bird", "Cat", "Dog", "Rabbit", "Pig")
     var pictureLabel: JLabel? = null
-    var currentSelection: String? = null
+    var currentSelection: String? = "Bird"
 
     fun plug(pl: JLabel) {
-        RadioButtonDemoController.pictureLabel = pl
+        pictureLabel = pl
     }
 
     fun update() {
-        val icon = createImageIcon("images/${RadioButtonDemoController.currentSelection}.gif")
-        ComboboxDemoController.pictureLabel?.icon = icon
-        ComboboxDemoController.pictureLabel?.toolTipText = "Picture of a " + RadioButtonDemoController.currentSelection?.toLowerCase()
+        val icon = createImageIcon("images/${currentSelection}.gif")
+        pictureLabel?.icon = icon
+        pictureLabel?.toolTipText = "Picture of a " + currentSelection?.toLowerCase()
         if (icon != null) {
-            ComboboxDemoController.pictureLabel?.text = null
+            pictureLabel?.text = null
         } else {
-            ComboboxDemoController.pictureLabel?.text = "Image not found"
+            pictureLabel?.text = "Image not found"
         }
     }
 
     fun updateCurrentSelection(s: String) {
-        ComboboxDemoController.currentSelection = s
+        currentSelection = s
     }
+
+//    fun switchButton(jb: JRadioButton) {
+//        when (jb.text) {
+//            currentSelection -> jb.isSelected = true
+//            else -> jb.isSelected = false
+//        }
+//    }
 }
 
 fun main() {
@@ -50,10 +59,9 @@ fun main() {
                 JRadioButton {
                     text = "Bird"
                     mnemonic = KeyEvent.VK_B
-
+                    isSelected = true
                     onAction {
-                        val petName = this.text
-                        RadioButtonDemoController.updateCurrentSelection(petName)
+                        RadioButtonDemoController.updateCurrentSelection(this.text)
                         RadioButtonDemoController.update()
                     }
                 }
@@ -61,25 +69,39 @@ fun main() {
                 JRadioButton {
                     text = "Cat"
                     mnemonic = KeyEvent.VK_C
-//                    actionCommand = RadioButtonDemo.catString
-                }
+                    isSelected = false
+                    onAction {
+                        RadioButtonDemoController.updateCurrentSelection(this.text)
+                        RadioButtonDemoController.update()
+                    }                }
 
                 JRadioButton {
                     text = "Dog"
                     mnemonic = KeyEvent.VK_D
-//                    actionCommand = RadioButtonDemo.dogString
+                    onAction {
+                        RadioButtonDemoController.updateCurrentSelection(this.text)
+                        RadioButtonDemoController.update()
+                    }
                 }
 
                 JRadioButton {
                     text = "Rabbit"
                     mnemonic = KeyEvent.VK_R
-//                    actionCommand = RadioButtonDemo.rabbitString
+                    isSelected = false
+                    onAction {
+                        RadioButtonDemoController.updateCurrentSelection(this.text)
+                        RadioButtonDemoController.update()
+                    }
                 }
 
                 JRadioButton {
                     text = "Pig"
                     mnemonic = KeyEvent.VK_P
-//                    actionCommand = RadioButtonDemo.pigString
+                    isSelected = false
+                    onAction {
+                        RadioButtonDemoController.updateCurrentSelection(this.text)
+                        RadioButtonDemoController.update()
+                    }
 
                 }
             }
