@@ -1,13 +1,10 @@
 package com.ogogon.matreshka
 
 import java.awt.*
-import javax.swing.AbstractButton
-import javax.swing.BoxLayout
-import javax.swing.ButtonGroup
-import javax.swing.JPanel
+import javax.swing.*
+import javax.swing.border.Border
 
 inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() -> Unit): T = T::class.java.newInstance().apply {
-    val panel = JPanel(this)
     lastParent?.add(panel, constraints)
     panel.layout = this
     val previousParent = lastParent
@@ -15,6 +12,21 @@ inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() ->
     function.invoke(this)
     lastParent = previousParent
 }
+
+val <T : LayoutManager> T.panel: JPanel
+        by lazy { JPanel() }
+
+var <T : LayoutManager> T.border: Border
+        get() = panel.border
+        set(value) {panel.border = value}
+
+var <T : LayoutManager> T.alignmentX: Float
+        get() = panel.alignmentX
+        set(value) {panel.alignmentX = value}
+
+var <T : LayoutManager> T.alignmentY: Float
+    get() = panel.alignmentY
+    set(value) {panel.alignmentY = value}
 
 val <T : Container> T.buttonGroup: ButtonGroup
     by lazy { ButtonGroup() }
