@@ -40,8 +40,7 @@ fun main() {
         title = "ComboBox Demo"
 
         BorderLayout(BorderLayout.PAGE_START) {
-            // Needs extra API
-            //border = BorderFactory.createEmptyBorder(20, 20, 20, 20)
+            border = BorderFactory.createEmptyBorder(20, 20, 20, 20)
             JComboBox {
                 model = DefaultComboBoxModel(ComboboxDemoController.petStrings)
                 selectedIndex = 4
