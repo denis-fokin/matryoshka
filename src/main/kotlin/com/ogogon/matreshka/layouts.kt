@@ -1,10 +1,9 @@
 package com.ogogon.matreshka
 
-import java.awt.BorderLayout
-import java.awt.FlowLayout
-import java.awt.GridLayout
-import java.awt.LayoutManager
+import java.awt.*
+import javax.swing.AbstractButton
 import javax.swing.BoxLayout
+import javax.swing.ButtonGroup
 import javax.swing.JPanel
 
 inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() -> Unit): T = T::class.java.newInstance().apply {
@@ -15,6 +14,13 @@ inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() ->
     lastParent = panel
     function.invoke(this)
     lastParent = previousParent
+}
+
+val <T : Container> T.buttonGroup: ButtonGroup
+    by lazy { ButtonGroup() }
+
+inline fun <reified T: Container> T.addToButtonGroup (button:AbstractButton) {
+    buttonGroup.add(button)
 }
 
 fun FlowLayout(c:Any? = null, f: FlowLayout.() -> Unit) = Layout(c, f)

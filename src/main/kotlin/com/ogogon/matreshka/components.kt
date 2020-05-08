@@ -21,6 +21,7 @@ fun JComboBox(constraints:Any? = null, function: JComboBox<Any?>.() -> Unit): JC
 }
 
 fun JRadioButton(constraints:Any? = null, function: JRadioButton.() -> Unit): JRadioButton = JRadioButton().apply {
+    lastParent?.addToButtonGroup(this)
     function.invoke(this)
     lastParent?.add(this, constraints)
 }
