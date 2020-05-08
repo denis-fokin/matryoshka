@@ -1,10 +1,15 @@
 package com.ogogon.matreshka
 
 import java.awt.*
+import java.util.*
 import javax.swing.*
 import javax.swing.border.Border
 
-inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() -> Unit): T = T::class.java.newInstance().apply {
+val layoutsToContainers = WeakHashMap<LayoutManager, JPanel?>()
+val containersToButtonGroup = WeakHashMap<Container, ButtonGroup?>()
+
+inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() -> Unit): T
+        = T::class.java.getDeclaredConstructor().newInstance().apply {
     lastParent?.add(panel, constraints)
     panel.layout = this
     val previousParent = lastParent
@@ -14,7 +19,12 @@ inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() ->
 }
 
 val <T : LayoutManager> T.panel: JPanel
-        by lazy { JPanel() }
+        get () {
+            if (!layoutsToContainers.containsKey(this)) {
+                layoutsToContainers[this] = JPanel()
+            }
+            return layoutsToContainers[this]!!
+        }
 
 var <T : LayoutManager> T.border: Border
         get() = panel.border
@@ -29,7 +39,12 @@ var <T : LayoutManager> T.alignmentY: Float
     set(value) {panel.alignmentY = value}
 
 val <T : Container> T.buttonGroup: ButtonGroup
-    by lazy { ButtonGroup() }
+    get () {
+        if (!containersToButtonGroup.containsKey(this)) {
+            containersToButtonGroup[this] = ButtonGroup()
+        }
+        return containersToButtonGroup[this]!!
+    }
 
 inline fun <reified T: Container> T.addToButtonGroup (button:AbstractButton) {
     buttonGroup.add(button)
