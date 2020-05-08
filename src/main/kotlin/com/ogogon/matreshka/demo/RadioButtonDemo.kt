@@ -14,7 +14,6 @@ import javax.swing.*
 val CAT_COMMAND = "CAT_COMAND"
 
 object RadioButtonDemoController {
-    val petStrings = arrayOf<String?>("Bird", "Cat", "Dog", "Rabbit", "Pig")
     var pictureLabel: JLabel? = null
     var currentSelection: String? = "Bird"
 
@@ -36,13 +35,6 @@ object RadioButtonDemoController {
     fun updateCurrentSelection(s: String) {
         currentSelection = s
     }
-
-//    fun switchButton(jb: JRadioButton) {
-//        when (jb.text) {
-//            currentSelection -> jb.isSelected = true
-//            else -> jb.isSelected = false
-//        }
-//    }
 }
 
 fun main() {
@@ -78,6 +70,7 @@ fun main() {
                 JRadioButton {
                     text = "Dog"
                     mnemonic = KeyEvent.VK_D
+                    isSelected = false
                     onAction {
                         RadioButtonDemoController.updateCurrentSelection(this.text)
                         RadioButtonDemoController.update()
@@ -102,7 +95,6 @@ fun main() {
                         RadioButtonDemoController.updateCurrentSelection(this.text)
                         RadioButtonDemoController.update()
                     }
-
                 }
             }
 
