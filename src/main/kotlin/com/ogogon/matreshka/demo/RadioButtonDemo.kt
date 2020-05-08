@@ -7,8 +7,6 @@ import java.awt.Font
 import java.awt.event.KeyEvent
 import javax.swing.*
 
-val CAT_COMMAND = "CAT_COMAND"
-
 object RadioButtonDemoController {
     var pictureLabel: JLabel? = null
     var currentSelection: String? = "Bird"
