@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.swing.*
 
-private val patternExamples = arrayOf<String>(
+private val patternExamples = arrayOf(
         "dd MMMMM yyyy",
         "dd.MM.yy",
         "MM/dd/yy",
