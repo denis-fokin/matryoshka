@@ -14,7 +14,7 @@ object CheckBoxDemoController {
     var pictureLabel:JLabel? = null
 
     fun plug(label: JLabel) {
-        pictureLabel = label
+        pictureLabel = label //gif
     }
 
     fun update (e: ItemEvent) {
