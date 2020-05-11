@@ -11,17 +11,20 @@ import javax.swing.*
 
 // See https://docs.oracle.com/javase/tutorial/uiswing/components/button.html
 
-private val updateButtonsState: (Component, ActionEvent) -> Unit = { c, e ->
-    if (c.parent.componentCount == 3) {
-        if ("disable" == e.actionCommand) {
-            c.parent.components[0].isEnabled = false
-            c.parent.components[1].isEnabled = false
-            c.parent.components[2].isEnabled = true
+object ButtonTextController {
+    lateinit var b1:JButton
+    lateinit var b2:JButton
+    lateinit var b3:JButton
+    fun update (a : String) {
 
+        if ("disable" == a) {
+            b2.isEnabled = false;
+            b1.isEnabled = false;
+            b3.isEnabled = true;
         } else {
-            c.parent.components[0].isEnabled = true
-            c.parent.components[1].isEnabled = true
-            c.parent.components[2].isEnabled = false
+            b2.isEnabled = true;
+            b1.isEnabled = true;
+            b3.isEnabled = false;
         }
     }
 }
@@ -40,7 +43,10 @@ fun main() {
                 actionCommand = "disable"
                 toolTipText = "Click this button to disable the middle button."
                 onAction {
-                    updateButtonsState.invoke(this, it)
+                    ButtonTextController.update(it.actionCommand)
+                }
+                apply{
+                    ButtonTextController.b1 = this
                 }
             }
 
@@ -52,7 +58,10 @@ fun main() {
                 mnemonic = KeyEvent.VK_M
                 toolTipText = "This middle button does nothing when you click it."
                 onAction {
-                    updateButtonsState.invoke(this, it)
+                   ButtonTextController.update(it.actionCommand)
+                }
+                apply{
+                    ButtonTextController.b2 = this
                 }
             }
             JButton {
@@ -63,7 +72,10 @@ fun main() {
                 isEnabled = false
                 toolTipText = "Click this button to enable the middle button."
                 onAction {
-                    updateButtonsState.invoke(this, it)
+                    ButtonTextController.update(it.actionCommand)
+                }
+                apply {
+                    ButtonTextController.b3 = this
                 }
             }
         }
