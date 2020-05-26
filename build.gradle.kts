@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.ogogon.swing.dsl"
-version = "1.0-SNAPSHOT"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -22,5 +22,18 @@ tasks {
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("default") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            url = uri("$buildDir/repository")
+        }
     }
 }
