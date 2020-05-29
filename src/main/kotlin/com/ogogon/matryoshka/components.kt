@@ -1,9 +1,6 @@
 package com.ogogon.matryoshka
 
-import javax.swing.JButton
-import javax.swing.JComboBox
-import javax.swing.JLabel
-import javax.swing.JRadioButton
+import javax.swing.*
 
 fun JButton(constraints:Any? = null, function: JButton.() -> Unit): JButton = JButton().apply {
     function.invoke(this)
@@ -11,6 +8,16 @@ fun JButton(constraints:Any? = null, function: JButton.() -> Unit): JButton = JB
 }
 
 fun JLabel(constraints:Any? = null, function: JLabel.() -> Unit): JLabel = JLabel().apply {
+    function.invoke(this)
+    lastParent?.add(this, constraints)
+}
+
+fun JTextField(constraints:Any? = null, function: JTextField.() -> Unit): JTextField = JTextField().apply {
+    function.invoke(this)
+    lastParent?.add(this, constraints)
+}
+
+fun JTextArea(constraints:Any? = null, function: JTextArea.() -> Unit): JTextArea = JTextArea().apply {
     function.invoke(this)
     lastParent?.add(this, constraints)
 }
