@@ -7,8 +7,14 @@ import javax.swing.text.JTextComponent
 
 inline fun <reified T: JComponent> Komponent (constraints:Any? = null, function: T.() -> Unit) : T
         = T::class.java.getDeclaredConstructor().newInstance().apply {
+
     function.invoke(this)
-    lastParent?.add(this, constraints)
+
+    if (lastParent is JScrollPane) {
+        (lastParent as JScrollPane).setViewportView(this)
+    } else {
+        lastParent?.add(this, constraints)
+    }
 }
 
 fun AbstractButton(c:Any? = null, f: AbstractButton.() -> Unit) = Komponent(c, f)
@@ -25,7 +31,7 @@ fun JList(c:Any? = null, f: JList<Any?>.() -> Unit) = Komponent(c, f)
 fun JMenuBar(c:Any? = null, f: JMenuBar.() -> Unit) = Komponent(c, f)
 fun JPanel(c:Any? = null, f: JPanel.() -> Unit) = Komponent(c, f)
 fun JScrollBar(c:Any? = null, f: JScrollBar.() -> Unit) = Komponent(c, f)
-fun JScrollPane(c:Any? = null, f: JScrollPane.() -> Unit) = Komponent(c, f)
+//fun JScrollPane(c:Any? = null, f: JScrollPane.() -> Unit) = Komponent(c, f)
 fun JSeparator(c:Any? = null, f: JSeparator.() -> Unit) = Komponent(c, f)
 fun JSlider(c:Any? = null, f: JSlider.() -> Unit) = Komponent(c, f)
 fun JSpinner(c:Any? = null, f: JSpinner.() -> Unit) = Komponent(c, f)

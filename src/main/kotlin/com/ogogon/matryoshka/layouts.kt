@@ -54,6 +54,15 @@ fun FlowLayout(c:Any? = null, f: FlowLayout.() -> Unit) = Layout(c, f)
 fun BorderLayout(c:Any? = null, f: BorderLayout.() -> Unit) = Layout(c, f)
 fun GridLayout(c:Any? = null, f: GridLayout.() -> Unit) = Layout(c, f)
 
+fun JScrollPane(constraints:Any? = null, f: JScrollPane.() -> Unit)
+        = JScrollPane::class.java.getDeclaredConstructor().newInstance().apply {
+    lastParent?.add(this, constraints)
+    val previousParent = lastParent
+    lastParent = this
+    f.invoke(this)
+    lastParent = previousParent
+}
+
 fun BoxLayout(panel:JPanel = JPanel(), axis:Int, function: BoxLayout.() -> Unit): BoxLayout = BoxLayout(panel, axis).apply {
     panel.layout = this
     lastParent?.add(panel)
