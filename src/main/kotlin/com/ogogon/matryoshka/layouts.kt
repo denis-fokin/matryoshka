@@ -8,23 +8,23 @@ import javax.swing.border.Border
 val layoutsToContainers = WeakHashMap<LayoutManager, JPanel?>()
 val containersToButtonGroup = WeakHashMap<Container, ButtonGroup?>()
 
-inline fun <reified T: LayoutManager> Layout(constraints:Any?, function: T.() -> Unit): T
+inline fun <reified T: LayoutManager> Layout(container:Container, constraints:Any?, function: T.() -> Unit): T
         = T::class.java.getDeclaredConstructor().newInstance().apply {
-    lastParent?.add(panel, constraints)
+    container.add(panel, constraints)
     panel.layout = this
-    val previousParent = lastParent
-    lastParent = panel
     function.invoke(this)
-    lastParent = previousParent
 }
 
-val <T : LayoutManager> T.panel: JPanel
-        get () {
-            if (!layoutsToContainers.containsKey(this)) {
-                layoutsToContainers[this] = JPanel()
-            }
-            return layoutsToContainers[this]!!
+var <T : LayoutManager> T.panel: JPanel
+    set(p) {
+        layoutsToContainers[this] = p
+    }
+    get() {
+        if (!layoutsToContainers.containsKey(this)) {
+            layoutsToContainers[this] = JPanel()
         }
+        return layoutsToContainers[this]!!
+    }
 
 var <T : LayoutManager> T.border: Border
         get() = panel.border
@@ -50,24 +50,54 @@ inline fun <reified T: Container> T.addToButtonGroup (button:AbstractButton) {
     buttonGroup.add(button)
 }
 
-fun FlowLayout(c:Any? = null, f: FlowLayout.() -> Unit) = Layout(c, f)
-fun BorderLayout(c:Any? = null, f: BorderLayout.() -> Unit) = Layout(c, f)
-fun GridLayout(c:Any? = null, f: GridLayout.() -> Unit) = Layout(c, f)
+fun Container.FlowLayout(c:Any? = null, f: FlowLayout.() -> Unit) = Layout(this, c, f)
+fun Container.BorderLayout(c:Any? = null, f: BorderLayout.() -> Unit) = Layout(this, c, f)
+fun Container.GridLayout(c:Any? = null, f: GridLayout.() -> Unit) = Layout(this, c, f)
+
+
+
+/*fun Container.TransformLayout(image: Image, c:Any? = null, f: TransformLayout.() -> Unit) = TLayout(image, this, c, f)
+
+inline fun <reified T: TransformLayout> TLayout(image:Image, container:Container, constraints:Any?, function: T.() -> Unit): T
+        = T::class.java.getDeclaredConstructor().newInstance().apply {
+    affineImage = AffineImage(this)
+    container.add(affineImage, constraints)
+    affineImage.layout = this
+    function.invoke(this)
+}*/
+
+
+
+/*class TPanel(layout: LayoutManager?) : JPanel(layout) {
+    override fun paintComponent(g: Graphics?) {
+        super.paintComponent(g)
+        g?.fillOval(0,0,300,300)
+    }
+}*/
+
+class TransformLayout : LayoutManager {
+    override fun layoutContainer(parent: Container?) {}
+
+    override fun preferredLayoutSize(parent: Container?): Dimension {
+        return Dimension(0,0)
+    }
+
+    override fun minimumLayoutSize(parent: Container?): Dimension {
+        return Dimension(0,0)
+    }
+
+    override fun addLayoutComponent(name: String?, comp: Component?) {}
+
+    override fun removeLayoutComponent(comp: Component?) {}
+
+}
 
 fun JScrollPane(constraints:Any? = null, f: JScrollPane.() -> Unit)
         = JScrollPane::class.java.getDeclaredConstructor().newInstance().apply {
-    lastParent?.add(this, constraints)
-    val previousParent = lastParent
-    lastParent = this
     f.invoke(this)
-    lastParent = previousParent
 }
 
 fun BoxLayout(panel:JPanel = JPanel(), axis:Int, function: BoxLayout.() -> Unit): BoxLayout = BoxLayout(panel, axis).apply {
     panel.layout = this
-    lastParent?.add(panel)
-    val previousParent = lastParent
-    lastParent = panel
     function.invoke(this)
-    lastParent = previousParent
 }

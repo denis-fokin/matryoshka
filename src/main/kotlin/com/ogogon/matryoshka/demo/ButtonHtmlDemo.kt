@@ -11,7 +11,7 @@ import javax.swing.JFrame
 
 // See https://docs.oracle.com/javase/tutorial/uiswing/components/button.html
 
-private val  updateButtonsState : (Component, ActionEvent) -> Unit  = { c, e ->
+private val updateButtonsState: (Component, ActionEvent) -> Unit = { c, e ->
     if (c.parent.componentCount == 3) {
         if ("disable" == e.actionCommand) {
             c.parent.components[0].isEnabled = false
@@ -28,45 +28,47 @@ private val  updateButtonsState : (Component, ActionEvent) -> Unit  = { c, e ->
 
 fun main() {
     JFrame {
-        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        title = "Button Demo"
         FlowLayout {
+            defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+            title = "Button Demo"
+            FlowLayout {
+                JButton {
+                    text = "<html><center><b><u>E</u>nable</b><br><font color=#ffffdd>middle button</font>"
+                    icon = createImageIcon("images/left.gif")
+                    font = font.deriveFont(Font.PLAIN)
+                    verticalTextPosition = AbstractButton.CENTER
+                    horizontalTextPosition = AbstractButton.LEADING //aka LEFT, for left-to-right locales
+                    mnemonic = KeyEvent.VK_D
+                    actionCommand = "disable"
+                    toolTipText = "Click this button to disable the middle button."
+                    onAction {
+                        updateButtonsState.invoke(this, it)
+                    }
+                }
+            }
             JButton {
-                text = "<html><center><b><u>E</u>nable</b><br><font color=#ffffdd>middle button</font>"
-                icon = createImageIcon("images/left.gif")
+                text = "middle button"
+                icon = createImageIcon("images/middle.gif")
                 font = font.deriveFont(Font.PLAIN)
-                verticalTextPosition = AbstractButton.CENTER
-                horizontalTextPosition = AbstractButton.LEADING //aka LEFT, for left-to-right locales
-                mnemonic = KeyEvent.VK_D
-                actionCommand = "disable"
-                toolTipText = "Click this button to disable the middle button."
+                foreground = Color(0xffffdd)
+                verticalTextPosition = AbstractButton.BOTTOM
+                horizontalTextPosition = AbstractButton.CENTER
+                mnemonic = KeyEvent.VK_M
+                toolTipText = "This middle button does nothing when you click it."
                 onAction {
                     updateButtonsState.invoke(this, it)
                 }
             }
-        }
-        JButton {
-            text = "middle button"
-            icon = createImageIcon("images/middle.gif")
-            font = font.deriveFont(Font.PLAIN)
-            foreground = Color(0xffffdd)
-            verticalTextPosition = AbstractButton.BOTTOM
-            horizontalTextPosition = AbstractButton.CENTER
-            mnemonic = KeyEvent.VK_M
-            toolTipText = "This middle button does nothing when you click it."
-            onAction {
-                updateButtonsState.invoke(this, it)
-            }
-        }
-        JButton {
-            text = "<html><center><b><u>D</u>isable</b><br><font color=#ffffdd>middle button</font>"
-            icon = createImageIcon("images/right.gif")
-            setMnemonic(KeyEvent.VK_E)
-            actionCommand = "enable"
-            isEnabled = false
-            toolTipText = "Click this button to enable the middle button."
-            onAction {
-                updateButtonsState.invoke(this, it)
+            JButton {
+                text = "<html><center><b><u>D</u>isable</b><br><font color=#ffffdd>middle button</font>"
+                icon = createImageIcon("images/right.gif")
+                setMnemonic(KeyEvent.VK_E)
+                actionCommand = "enable"
+                isEnabled = false
+                toolTipText = "Click this button to enable the middle button."
+                onAction {
+                    updateButtonsState.invoke(this, it)
+                }
             }
         }
     }
