@@ -4,7 +4,6 @@ package com.ogogon.matryoshka
 import java.awt.*
 import java.awt.geom.AffineTransform
 import javax.swing.*
-import javax.swing.plaf.LayerUI
 import javax.swing.table.JTableHeader
 import javax.swing.text.JTextComponent
 
